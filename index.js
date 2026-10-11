@@ -1,3 +1,4 @@
+
 const {
   Client,
   GatewayIntentBits,
@@ -37,7 +38,8 @@ const opcoes = {
     titulo: '<:supervisor:1558220611191312405> Supervisão',
     descricao:
       '<:supervisor:1558220611191312405> **Supervisão:**\n\n' +
-      '<@1511423848459800668>: Auxilia o Lobão em questões relacionadas ao Discord, organização dos canais, configuração de cargos e permissões, resolução de problemas e suporte à equipe.'
+      '<@1511423848459800668>: Auxilia o Lobão em questões relacionadas ao Discord, organização dos canais, configuração de cargos e permissões, resolução de problemas e suporte à equipe.\n\n' +
+      '<@1444057630724063292>: Auxilia o Lobão e os donos na administração do Discord, organização do servidor, gerenciamento de cargos e permissões, resolução de problemas e suporte geral à equipe.'
   },
 
   manager: {
@@ -95,10 +97,10 @@ client.on('messageCreate', async message => {
 
     const embed = new EmbedBuilder()
       .setColor(verde)
-      .setTitle('Central de cargos e hierarquia')
       .setDescription(
-        'Selecione uma categoria no menu abaixo para consultar ' +
-        'as funções e responsabilidades de cada cargo.'
+        '## -# **Conheça a equipe responsável pela condução do Quartel Militar do Exército** <:martelo_adm:1558153039645511830>\n' +
+        '-# Nesta seção estão reunidos os integrantes que atuam diretamente na **administração, organização, supervisão e desenvolvimento da comunidade**, contribuindo para o funcionamento de seus setores e para a manutenção de sua estrutura.\n' +
+        '-# **Cada membro possui uma função específica dentro da Administração**, exercendo suas atribuições conforme sua área de atuação e contribuindo para o desenvolvimento contínuo do Exército Brasileiro.'
       );
 
     await message.channel.send({
