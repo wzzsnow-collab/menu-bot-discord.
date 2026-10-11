@@ -57,57 +57,64 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async message => {
-  if (message.author.bot || !message.guild) return;
+  console.log('Mensagem recebida:', message.content);
 
+  if (message.author.bot || !message.guild) return;
   if (message.content.trim().toLowerCase() !== '!menu') return;
 
-  const menu = new StringSelectMenuBuilder()
-    .setCustomId('menu_cargos')
-    .setPlaceholder('Selecione uma categoria...')
-    .addOptions([
-      {
-        label: 'Administração e moderação',
-        value: 'administracao',
-        description: 'Funções do administrador e dos moderadores',
-        emoji: {
-          id: '1558153039645511830',
-          name: 'martelo_adm'
+  try {
+    const menu = new StringSelectMenuBuilder()
+      .setCustomId('menu_cargos')
+      .setPlaceholder('Selecione uma categoria...')
+      .addOptions([
+        {
+          label: 'Administração e moderação',
+          value: 'administracao',
+          description: 'Funções do administrador e dos moderadores',
+          emoji: {
+            id: '1558153039645511830',
+            name: 'martelo_adm'
+          }
+        },
+        {
+          label: 'Supervisão',
+          value: 'supervisao',
+          description: 'Informações sobre a supervisão',
+          emoji: {
+            id: '1558220611191312405',
+            name: 'supervisor'
+          }
+        },
+        {
+          label: 'Manager e criadores',
+          value: 'manager',
+          description: 'Conheça a direção e os criadores',
+          emoji: {
+            id: '1558220670788436000',
+            name: 'manager'
+          }
         }
-      },
-      {
-        label: 'Supervisão',
-        value: 'supervisao',
-        description: 'Informações sobre a supervisão',
-        emoji: {
-          id: '1558220611191312405',
-          name: 'supervisor'
-        }
-      },
-      {
-        label: 'Manager e criadores',
-        value: 'manager',
-        description: 'Conheça a direção e os criadores',
-        emoji: {
-          id: '1558220670788436000',
-          name: 'manager'
-        }
-      }
-    ]);
+      ]);
 
-  const embed = new EmbedBuilder()
-    .setColor(verde)
-    .setTitle('Central de cargos e hierarquia')
-    .setDescription(
-      'Selecione uma categoria no menu abaixo para consultar ' +
-      'as funções e responsabilidades de cada cargo.'
-    );
+    const embed = new EmbedBuilder()
+      .setColor(verde)
+      .setTitle('Central de cargos e hierarquia')
+      .setDescription(
+        'Selecione uma categoria no menu abaixo para consultar ' +
+        'as funções e responsabilidades de cada cargo.'
+      );
 
-  await message.channel.send({
-    embeds: [embed],
-    components: [
-      new ActionRowBuilder().addComponents(menu)
-    ]
-  });
+    await message.channel.send({
+      embeds: [embed],
+      components: [
+        new ActionRowBuilder().addComponents(menu)
+      ]
+    });
+
+    console.log('Menu enviado com sucesso!');
+  } catch (error) {
+    console.error('Erro ao executar !menu:', error);
+  }
 });
 
 client.on('interactionCreate', async interaction => {
@@ -118,22 +125,37 @@ client.on('interactionCreate', async interaction => {
     return;
   }
 
-  const opcao = opcoes[interaction.values[0]];
-  if (!opcao) return;
+  try {
+    const opcao = opcoes[interaction.values[0]];
+    if (!opcao) return;
 
-  const embed = new EmbedBuilder()
-    .setColor(verde)
-    .setTitle(opcao.titulo)
-    .setDescription(opcao.descricao)
-    .setFooter({
-      text: 'Informações oficiais • Hierarquia do servidor'
+    const embed = new EmbedBuilder()
+      .setColor(verde)
+      .setTitle(opcao.titulo)
+      .setDescription(opcao.descricao)
+      .setFooter({
+        text: 'Informações oficiais • Hierarquia do servidor'
+      });
+
+    await interaction.reply({
+      embeds: [embed],
+      flags: MessageFlags.Ephemeral,
+      allowedMentions: { parse: [] }
     });
 
-  await interaction.reply({
-    embeds: [embed],
-    flags: MessageFlags.Ephemeral,
-    allowedMentions: { parse: [] }
-  });
+    console.log('Categoria selecionada:', interaction.values[0]);
+  } catch (error) {
+    console.error('Erro ao responder à categoria:', error);
+
+    if (!interaction.replied && !interaction.deferred) {
+      await interaction.reply({
+        content: 'Ocorreu um erro ao abrir esta categoria.',
+        flags: MessageFlags.Ephemeral
+      }).catch(console.error);
+    }
+  }
 });
 
-client.login(token);
+client.login(token).catch(error => {
+  console.error('Erro ao conectar o bot:', error);
+});
