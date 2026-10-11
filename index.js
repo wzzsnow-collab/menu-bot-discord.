@@ -1,4 +1,3 @@
-
 const {
   Client,
   GatewayIntentBits,
@@ -23,11 +22,13 @@ const client = new Client({
 });
 
 const verde = 0x064E3B;
+const barra = '━━━━━━━━━━━━━━━━━━━━';
 
 const opcoes = {
   administracao: {
     titulo: '<:martelo_adm:1558153039645511830> Administração e moderação',
     descricao:
+      barra + '\n\n' +
       '**Administrador:**\n' +
       '*Responsável por supervisionar os moderadores, o chat e os meios de comunicação do Discord, podendo aplicar banimentos e outras medidas.*\n\n' +
       '**Moderador:**\n' +
@@ -37,16 +38,19 @@ const opcoes = {
   supervisao: {
     titulo: '<:Superviso:1558895037608366170> Supervisão',
     descricao:
-      '<:Superviso:1558895037608366170> **Supervisão:**\n\n' +
+      barra + '\n\n' +
       '<@1511423848459800668>: Responsável por auxiliar diretamente o Lobão em questões relacionadas ao Discord, contribuindo para a organização e manutenção do servidor. Atua no gerenciamento e na organização dos canais, configuração e ajuste de cargos e permissões, resolução de problemas técnicos e administrativos, além de prestar suporte aos membros da equipe sempre que necessário. Também auxilia na manutenção da estrutura do servidor, buscando garantir um ambiente organizado, funcional e adequado às necessidades da administração.\n\n' +
+      barra + '\n\n' +
       '<@1444057630724063292>: Responsável por auxiliar o Lobão e os proprietários na administração geral do Discord, colaborando para o bom funcionamento e a organização do servidor. Atua no gerenciamento de canais, organização da estrutura interna, configuração e manutenção de cargos e permissões, resolução de problemas e suporte geral à equipe administrativa. Também contribui para a aplicação das diretrizes estabelecidas pelos responsáveis, auxilia na identificação de dificuldades internas e trabalha para manter a organização, a eficiência e a estabilidade do servidor. Além disso, presta assistência nas demandas administrativas e colabora com os demais membros da equipe para garantir que as atividades sejam realizadas de maneira organizada e eficiente.'
   },
 
   manager: {
     titulo: '<:Criador:1558896039484727347> Manager e criadores',
     descricao:
+      barra + '\n\n' +
       '**Manager:** <@1517677363268419627>\n' +
       'Responsável pela liderança e organização de toda a administração do servidor. Atua diretamente no comando da equipe administrativa, auxilia nas vendas e no suporte do Exército, garantindo que os serviços sejam realizados de maneira eficiente e organizada. Também presta assistência ao Duque em questões relacionadas ao Discord, auxiliando na resolução de problemas, na organização interna e na manutenção do bom funcionamento do servidor.\n\n' +
+      barra + '\n\n' +
       '**Criador:** <@1531124763651735556>\n' +
       'Fundador e proprietário absoluto do servidor, responsável pela sua criação, desenvolvimento e direção geral. Possui autoridade máxima sobre todas as decisões administrativas e organizacionais, estando acima de todos os demais cargos e membros da equipe. É responsável por definir os rumos do servidor, estabelecer diretrizes, supervisionar a administração e garantir que os objetivos e padrões estabelecidos sejam mantidos. Nenhum outro cargo possui autoridade superior à do Criador.'
   }
@@ -99,6 +103,7 @@ client.on('messageCreate', async message => {
       .setColor(verde)
       .setDescription(
         '## -# **Conheça a equipe responsável pela condução do Quartel Militar do Exército** <:martelo_adm:1558153039645511830>\n' +
+        barra + '\n' +
         '-# Nesta seção estão reunidos os integrantes que atuam diretamente na **administração, organização, supervisão e desenvolvimento da comunidade**, contribuindo para o funcionamento de seus setores e para a manutenção de sua estrutura.\n' +
         '-# **Cada membro possui uma função específica dentro da Administração**, exercendo suas atribuições conforme sua área de atuação e contribuindo para o desenvolvimento contínuo do Exército Brasileiro.'
       );
