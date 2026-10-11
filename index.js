@@ -1,4 +1,3 @@
-
 const {
   Client,
   GatewayIntentBits,
@@ -12,6 +11,7 @@ const {
 } = require('discord.js');
 
 const token = process.env.DISCORD_TOKEN;
+const guildId = '1558618280153841766';
 
 if (!token) {
   throw new Error('Configure DISCORD_TOKEN no FadeHost.');
@@ -36,7 +36,9 @@ const opcoes = {
   supervisao: {
     titulo: '<:supervisor:1558220611191312405> Supervisão',
     descricao:
-      '<@1444057630724063292>: *Auxiliar em questões de bots e auxiliar do manager.*'
+      '<:supervisor:1558220611191312405> **Supervisão:**\n\n' +
+      '<@1511423848459800668>: *Auxiliar do lobão em questões de discord e etc.*\n\n' +
+      '<@1444057630724063292>: *Auxiliar do lobão e dos donos em questões de discord e etc.*'
   },
 
   manager: {
@@ -50,21 +52,29 @@ const opcoes = {
 };
 
 client.once('ready', async () => {
-  const rest = new REST({ version: '10' }).setToken(token);
+  try {
+    const rest = new REST({ version: '10' }).setToken(token);
 
-  await rest.put(
-    Routes.applicationCommands(client.user.id),
-    {
-      body: [
-        new SlashCommandBuilder()
-          .setName('menu')
-          .setDescription('Consultar cargos e hierarquia do servidor')
-          .toJSON()
-      ]
-    }
-  );
+    await rest.put(
+      Routes.applicationGuildCommands(
+        client.user.id,
+        guildId
+      ),
+      {
+        body: [
+          new SlashCommandBuilder()
+            .setName('menu')
+            .setDescription('Consultar cargos e hierarquia do servidor')
+            .toJSON()
+        ]
+      }
+    );
 
-  console.log(`Bot online: ${client.user.tag}`);
+    console.log('Comando /menu registrado no servidor!');
+    console.log(`Bot online: ${client.user.tag}`);
+  } catch (error) {
+    console.error('Erro ao registrar o comando:', error);
+  }
 });
 
 client.on('interactionCreate', async interaction => {
@@ -81,7 +91,7 @@ client.on('interactionCreate', async interaction => {
           value: 'administracao',
           description: 'Funções do administrador e dos moderadores',
           emoji: {
-            id: '1558153039645511830',
+            id: '1558153039645512405',
             name: 'martelo_adm'
           }
         },
@@ -138,7 +148,9 @@ client.on('interactionCreate', async interaction => {
       });
 
     await interaction.reply({
-      embeds: [embed],
+      embeds: [
+        embed
+      ],
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] }
     });
