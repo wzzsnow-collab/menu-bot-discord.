@@ -37,8 +37,7 @@ const opcoes = {
     titulo: '<:supervisor:1558220611191312405> Supervisão',
     descricao:
       '<:supervisor:1558220611191312405> **Supervisão:**\n\n' +
-      '<@1511423848459800668>: Auxilia o Lobão em questões relacionadas ao Discord, organização dos canais, configuração de cargos e permissões, resolução de problemas e suporte à equipe.\n\n' +
-      '<@1444057630724063292>: Auxilia o Lobão e os donos na administração do Discord, organização do servidor, gerenciamento de cargos e permissões, resolução de problemas e suporte geral à equipe.'
+      '<@1511423848459800668>: Auxilia o Lobão em questões relacionadas ao Discord, organização dos canais, configuração de cargos e permissões, resolução de problemas e suporte à equipe.'
   },
 
   manager: {
