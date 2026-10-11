@@ -37,17 +37,17 @@ const opcoes = {
     titulo: '<:supervisor:1558220611191312405> Supervisão',
     descricao:
       '<:supervisor:1558220611191312405> **Supervisão:**\n\n' +
-      '<@1511423848459800668>: *Auxiliar do lobão em questões de discord e etc.*\n\n' +
-      '<@1444057630724063292>: *Auxiliar do lobão e dos donos em questões de discord e etc.*'
+      '<@1511423848459800668>: Auxilia o Lobão em questões relacionadas ao Discord, organização dos canais, configuração de cargos e permissões, resolução de problemas e suporte à equipe.\n\n' +
+      '<@1444057630724063292>: Auxilia o Lobão e os donos na administração do Discord, organização do servidor, gerenciamento de cargos e permissões, resolução de problemas e suporte geral à equipe.'
   },
 
   manager: {
     titulo: '<:manager:1558220670788436000> Manager e criadores',
     descricao:
       '**Manager:** <@1517677363268419627>\n' +
-      '*Chefe da administração, auxiliar de vendas e suporte do exército, além de auxiliar o duque em questões do Discord.*\n\n' +
+      'Responsável pela liderança e organização de toda a administração do servidor. Atua diretamente no comando da equipe administrativa, auxilia nas vendas e no suporte do Exército, garantindo que os serviços sejam realizados de maneira eficiente e organizada. Também presta assistência ao Duque em questões relacionadas ao Discord, auxiliando na resolução de problemas, na organização interna e na manutenção do bom funcionamento do servidor.\n\n' +
       '**Criador:** <@1531124763651735556>\n' +
-      '*É o dono do servidor, sem ninguém acima dele.*'
+      'Fundador e proprietário absoluto do servidor, responsável pela sua criação, desenvolvimento e direção geral. Possui autoridade máxima sobre todas as decisões administrativas e organizacionais, estando acima de todos os demais cargos e membros da equipe. É responsável por definir os rumos do servidor, estabelecer diretrizes, supervisionar a administração e garantir que os objetivos e padrões estabelecidos sejam mantidos. Nenhum outro cargo possui autoridade superior à do Criador.'
   }
 };
 
@@ -57,8 +57,6 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async message => {
-  console.log('Mensagem recebida:', message.content);
-
   if (message.author.bot || !message.guild) return;
   if (message.content.trim().toLowerCase() !== '!menu') return;
 
