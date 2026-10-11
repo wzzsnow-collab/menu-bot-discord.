@@ -35,15 +35,15 @@ const opcoes = {
   },
 
   supervisao: {
-    titulo: '<:supervisor:1558220611191312405> Supervisão',
+    titulo: '<:Superviso:1558895037608366170> Supervisão',
     descricao:
-      '<:supervisor:1558220611191312405> **Supervisão:**\n\n' +
-      '<@1511423848459800668>: Auxilia o Lobão em questões relacionadas ao Discord, organização dos canais, configuração de cargos e permissões, resolução de problemas e suporte à equipe.\n\n' +
-      '<@1444057630724063292>: Auxilia o Lobão e os donos na administração do Discord, organização do servidor, gerenciamento de cargos e permissões, resolução de problemas e suporte geral à equipe.'
+      '<:Superviso:1558895037608366170> **Supervisão:**\n\n' +
+      '<@1511423848459800668>: Responsável por auxiliar diretamente o Lobão em questões relacionadas ao Discord, contribuindo para a organização e manutenção do servidor. Atua no gerenciamento e na organização dos canais, configuração e ajuste de cargos e permissões, resolução de problemas técnicos e administrativos, além de prestar suporte aos membros da equipe sempre que necessário. Também auxilia na manutenção da estrutura do servidor, buscando garantir um ambiente organizado, funcional e adequado às necessidades da administração.\n\n' +
+      '<@1444057630724063292>: Responsável por auxiliar o Lobão e os proprietários na administração geral do Discord, colaborando para o bom funcionamento e a organização do servidor. Atua no gerenciamento de canais, organização da estrutura interna, configuração e manutenção de cargos e permissões, resolução de problemas e suporte geral à equipe administrativa. Também contribui para a aplicação das diretrizes estabelecidas pelos responsáveis, auxilia na identificação de dificuldades internas e trabalha para manter a organização, a eficiência e a estabilidade do servidor. Além disso, presta assistência nas demandas administrativas e colabora com os demais membros da equipe para garantir que as atividades sejam realizadas de maneira organizada e eficiente.'
   },
 
   manager: {
-    titulo: '<:manager:1558220670788436000> Manager e criadores',
+    titulo: '<:Criador:1558896039484727347> Manager e criadores',
     descricao:
       '**Manager:** <@1517677363268419627>\n' +
       'Responsável pela liderança e organização de toda a administração do servidor. Atua diretamente no comando da equipe administrativa, auxilia nas vendas e no suporte do Exército, garantindo que os serviços sejam realizados de maneira eficiente e organizada. Também presta assistência ao Duque em questões relacionadas ao Discord, auxiliando na resolução de problemas, na organização interna e na manutenção do bom funcionamento do servidor.\n\n' +
@@ -80,8 +80,8 @@ client.on('messageCreate', async message => {
           value: 'supervisao',
           description: 'Informações sobre a supervisão',
           emoji: {
-            id: '1558220611191312405',
-            name: 'supervisor'
+            id: '1558895037608366170',
+            name: 'Superviso'
           }
         },
         {
@@ -89,8 +89,8 @@ client.on('messageCreate', async message => {
           value: 'manager',
           description: 'Conheça a direção e os criadores',
           emoji: {
-            id: '1558220670788436000',
-            name: 'manager'
+            id: '1558896039484727347',
+            name: 'Criador'
           }
         }
       ]);
