@@ -1,9 +1,6 @@
 const {
   Client,
   GatewayIntentBits,
-  REST,
-  Routes,
-  SlashCommandBuilder,
   StringSelectMenuBuilder,
   ActionRowBuilder,
   EmbedBuilder,
@@ -11,14 +8,17 @@ const {
 } = require('discord.js');
 
 const token = process.env.DISCORD_TOKEN;
-const guildId = '1558618280153841766';
 
 if (!token) {
   throw new Error('Configure DISCORD_TOKEN no FadeHost.');
 }
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ]
 });
 
 const verde = 0x064E3B;
@@ -51,110 +51,89 @@ const opcoes = {
   }
 };
 
-client.once('ready', async () => {
-  try {
-    const rest = new REST({ version: '10' }).setToken(token);
+client.once('ready', () => {
+  console.log(`Bot online: ${client.user.tag}`);
+  console.log('Comando !menu ativado!');
+});
 
-    await rest.put(
-      Routes.applicationGuildCommands(
-        client.user.id,
-        guildId
-      ),
+client.on('messageCreate', async message => {
+  if (message.author.bot || !message.guild) return;
+
+  if (message.content.trim().toLowerCase() !== '!menu') return;
+
+  const menu = new StringSelectMenuBuilder()
+    .setCustomId('menu_cargos')
+    .setPlaceholder('Selecione uma categoria...')
+    .addOptions([
       {
-        body: [
-          new SlashCommandBuilder()
-            .setName('menu')
-            .setDescription('Consultar cargos e hierarquia do servidor')
-            .toJSON()
-        ]
+        label: 'Administração e moderação',
+        value: 'administracao',
+        description: 'Funções do administrador e dos moderadores',
+        emoji: {
+          id: '1558153039645511830',
+          name: 'martelo_adm'
+        }
+      },
+      {
+        label: 'Supervisão',
+        value: 'supervisao',
+        description: 'Informações sobre a supervisão',
+        emoji: {
+          id: '1558220611191312405',
+          name: 'supervisor'
+        }
+      },
+      {
+        label: 'Manager e criadores',
+        value: 'manager',
+        description: 'Conheça a direção e os criadores',
+        emoji: {
+          id: '1558220670788436000',
+          name: 'manager'
+        }
       }
+    ]);
+
+  const embed = new EmbedBuilder()
+    .setColor(verde)
+    .setTitle('Central de cargos e hierarquia')
+    .setDescription(
+      'Selecione uma categoria no menu abaixo para consultar ' +
+      'as funções e responsabilidades de cada cargo.'
     );
 
-    console.log('Comando /menu registrado no servidor!');
-    console.log(`Bot online: ${client.user.tag}`);
-  } catch (error) {
-    console.error('Erro ao registrar o comando:', error);
-  }
+  await message.channel.send({
+    embeds: [embed],
+    components: [
+      new ActionRowBuilder().addComponents(menu)
+    ]
+  });
 });
 
 client.on('interactionCreate', async interaction => {
   if (
-    interaction.isChatInputCommand() &&
-    interaction.commandName === 'menu'
+    !interaction.isStringSelectMenu() ||
+    interaction.customId !== 'menu_cargos'
   ) {
-    const menu = new StringSelectMenuBuilder()
-      .setCustomId('menu_cargos')
-      .setPlaceholder('Selecione uma categoria...')
-      .addOptions([
-        {
-          label: 'Administração e moderação',
-          value: 'administracao',
-          description: 'Funções do administrador e dos moderadores',
-          emoji: {
-            id: '1558153039645512405',
-            name: 'martelo_adm'
-          }
-        },
-        {
-          label: 'Supervisão',
-          value: 'supervisao',
-          description: 'Informações sobre a supervisão',
-          emoji: {
-            id: '1558220611191312405',
-            name: 'supervisor'
-          }
-        },
-        {
-          label: 'Manager e criadores',
-          value: 'manager',
-          description: 'Conheça a direção e os criadores',
-          emoji: {
-            id: '1558220670788436000',
-            name: 'manager'
-          }
-        }
-      ]);
-
-    const embed = new EmbedBuilder()
-      .setColor(verde)
-      .setTitle('Central de cargos e hierarquia')
-      .setDescription(
-        'Selecione uma categoria no menu abaixo para consultar ' +
-        'as funções e responsabilidades de cada cargo.'
-      );
-
-    await interaction.reply({
-      embeds: [embed],
-      components: [
-        new ActionRowBuilder().addComponents(menu)
-      ]
-    });
+    return;
   }
 
-  if (
-    interaction.isStringSelectMenu() &&
-    interaction.customId === 'menu_cargos'
-  ) {
-    const opcao = opcoes[interaction.values[0]];
+  const opcao = opcoes[interaction.values[0]];
+  if (!opcao) return;
 
-    if (!opcao) return;
-
-    const embed = new EmbedBuilder()
-      .setColor(verde)
-      .setTitle(opcao.titulo)
-      .setDescription(opcao.descricao)
-      .setFooter({
-        text: 'Informações oficiais • Hierarquia do servidor'
-      });
-
-    await interaction.reply({
-      embeds: [
-        embed
-      ],
-      flags: MessageFlags.Ephemeral,
-      allowedMentions: { parse: [] }
+  const embed = new EmbedBuilder()
+    .setColor(verde)
+    .setTitle(opcao.titulo)
+    .setDescription(opcao.descricao)
+    .setFooter({
+      text: 'Informações oficiais • Hierarquia do servidor'
     });
-  }
+
+  await interaction.reply({
+    embeds: [embed],
+    flags: MessageFlags.Ephemeral,
+    allowedMentions: { parse: [] }
+  });
 });
 
 client.login(token);
